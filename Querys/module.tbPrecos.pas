@@ -40,7 +40,7 @@ FDQuery := TFDQuery.Create(nil);
     FDQuery.Connection := FDConnection;
     FDQuery.SQL.Text := 'INSERT INTO tabela_de_precos (descricao_tabela_precos, cd_status) VALUES (:descricao_tabela_precos, :cd_status)';
 
-    // Define os par‚metros
+    // Define os par√¢metros
     FDQuery.ParamByName('descricao_tabela_precos').AsString := descricaoTbPrecos;
     FDQuery.ParamByName('cd_status').AsInteger := cd_status;
 
@@ -101,8 +101,7 @@ FDQuery := TFDQuery.Create(nil);
 
 
   FDQuery.Open; // Executa a consulta
-  Result := FDQuery.Fields[0].AsInteger; // ObtÈm o resultado
-  showmessage( intToStr(Result) );
+  Result := FDQuery.Fields[0].AsInteger; // Obt√©m o resultado
   FDQuery.Close; // Fecha a consulta
 
   finally
