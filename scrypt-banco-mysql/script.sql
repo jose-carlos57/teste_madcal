@@ -29,11 +29,11 @@ CREATE TABLE `contas` (
   `nome` varchar(40) NOT NULL,
   `apelido` varchar(40) DEFAULT NULL,
   `telefone` varchar(40) NOT NULL,
-  `tipo_conta` int NOT NULL,
+  `tipo_conta` varchar(40) DEFAULT NULL,
   `tipo_pessoa` int DEFAULT NULL,
   `cd_status` int NOT NULL,
   PRIMARY KEY (`id_conta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `contas` (
 
 LOCK TABLES `contas` WRITE;
 /*!40000 ALTER TABLE `contas` DISABLE KEYS */;
+INSERT INTO `contas` VALUES (1,'carlos','die','(88) 99999-9999','Vendedor',0,1),(2,'ricardo','rick','(55) 55555-5555','Cliente',1,1);
 /*!40000 ALTER TABLE `contas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,6 +70,7 @@ CREATE TABLE `itens` (
 
 LOCK TABLES `itens` WRITE;
 /*!40000 ALTER TABLE `itens` DISABLE KEYS */;
+INSERT INTO `itens` VALUES (NULL,1,11),(NULL,2,13),(NULL,2,14),(NULL,3,12),(NULL,3,15);
 /*!40000 ALTER TABLE `itens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,9 +88,11 @@ CREATE TABLE `orcamento` (
   `nome_vendedor` varchar(40) NOT NULL,
   `telefone_vendedor` varchar(40) NOT NULL,
   `forma_pagamento` varchar(40) NOT NULL,
-  `tabela_de_preco` varchar(40) NOT NULL,
+  `tabela_de_preco` int DEFAULT NULL,
+  `desconto` varchar(40) DEFAULT NULL,
+  `id_produto` int DEFAULT NULL,
   PRIMARY KEY (`id_orcamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +101,7 @@ CREATE TABLE `orcamento` (
 
 LOCK TABLES `orcamento` WRITE;
 /*!40000 ALTER TABLE `orcamento` DISABLE KEYS */;
+INSERT INTO `orcamento` VALUES (1,'teste','(44) 44444-4444','teste','(33) 33333-3333','',7,'32',2),(2,'carl0os','(88) 88888-8888','teste','(88) 88888-8888','',7,'32',1),(3,'carlos','(34) 33333-3333','amanda americanas','(66) 66666-6666','',8,'',3),(4,'carlos','(34) 33333-3333','amanda americanas','(66) 66666-6666','',8,'45',3),(5,'carlos','(34) 33333-3333','amanda americanas','(66) 66666-6666','',8,'45',3),(6,'bruno','(11) 11111-1111','marcos','(11) 11111-1111','',6,'',2),(7,'testando','(66) 66666-6666','testado','(66) 66666-6666','Cartão de credito',6,'',5),(8,'Froid','(33) 33333-3333','spiruos','(22) 22222-2222','Cartão de credito',7,'',1),(9,'Froid','(33) 33333-3333','spiruos','(22) 22222-2222','Á vista',7,'44',1),(10,'hyththt','(54) 54564-5645','teste','(44) 44444-4444','Á vista',6,'565',1),(11,'effwef','(33) 42354-5435','teste','(43) 34553-4543','Boleto',7,'',1),(12,'carla','(22) 22222-2222','Ph','(22) 22222-2222','Á vista',7,'23',3),(13,'dqw','(22) 22222-2222','Die','(22) 22222-2222','Boleto',6,'',2),(14,'dqw','(22) 22222-2222','Die','(22) 22222-2222','Boleto',6,'',2),(15,'effef','(22) 22222-2222','efweffwef','(33) 32323-2323','Boleto',7,'',3);
 /*!40000 ALTER TABLE `orcamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,16 +113,16 @@ DROP TABLE IF EXISTS `politica_de_precos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `politica_de_precos` (
-  `id_Politica_precos` int NOT NULL,
+  `id_Politica_precos` int NOT NULL AUTO_INCREMENT,
   `idTabela_de_precos` int DEFAULT NULL,
-  `id_Produtos` int NOT NULL,
-  `Preco` int NOT NULL,
-  PRIMARY KEY (`id_Politica_precos`,`id_Produtos`),
+  `id_Produtos` int DEFAULT NULL,
+  `Preco` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`id_Politica_precos`),
   KEY `idTabela_de_precos` (`idTabela_de_precos`),
   KEY `id_Produtos` (`id_Produtos`),
   CONSTRAINT `politica_de_precos_ibfk_1` FOREIGN KEY (`idTabela_de_precos`) REFERENCES `tabela_de_precos` (`idTabela_de_precos`),
   CONSTRAINT `politica_de_precos_ibfk_2` FOREIGN KEY (`id_Produtos`) REFERENCES `produtos` (`id_produtos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +147,7 @@ CREATE TABLE `produtos` (
   `unidade_medida` float NOT NULL,
   `cd_status` int NOT NULL,
   PRIMARY KEY (`id_produtos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +156,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
+INSERT INTO `produtos` VALUES (1,'telha',5,1),(2,'telha',5,1),(3,'cimento',4,1),(4,'cimento-colaa',45,1),(5,'carroça',2,1),(6,'carroça',2,1),(7,'carroça',2,1),(8,'ceramica',4,1),(9,'telha',4.6,1),(10,'telha',4.6,1),(11,'telha',4.6,1),(12,'telha',4.6,1),(13,'telha',4.6,1),(14,'telha',4.6,1),(15,'telha',4.6,1),(16,'teste',3.4,1),(17,'teste',3.4,1),(18,'rferf',54,1),(19,'rferf',54,1),(20,'rferf',54,1),(21,'rferf',54,1),(22,'TESTE',3,1),(23,'lata de tinta',4.5,1),(24,'broca',3,1);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +172,7 @@ CREATE TABLE `tabela_de_precos` (
   `descricao_tabela_precos` varchar(45) NOT NULL,
   `cd_status` int NOT NULL,
   PRIMARY KEY (`idTabela_de_precos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,4 +193,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-30 19:30:41
+-- Dump completed on 2024-10-04  9:24:29
